@@ -6,7 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.common.exceptions import TimeoutException
-import os
+import time
 
 # Streamlit app URL from environment variable (or default)
 STREAMLIT_URL = "https://leah-rothschild.streamlit.app/"
@@ -27,16 +27,18 @@ def main():
 
         wait = WebDriverWait(driver, 15)
         try:
+
+
             # Look for the wake-up button
             button = wait.until(
-                EC.element_to_be_clickable((By.XPATH, "//button[contains(text(),Yes, get this app back up)]"))
+                EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Yes')]"))
             )
             print("Wake-up button found. Clicking...")
             button.click()
-
+            time.sleep(30)
             # After clicking, check if it disappears
             try:
-                wait.until(EC.invisibility_of_element_located((By.XPATH, "//button[contains(text(),Yes, get this app back up)]")))
+                wait.until(EC.invisibility_of_element_located((By.XPATH,  "//button[contains(text(), 'Yes')]")))
                 print("Button clicked and disappeared ✅ (app should be waking up)")
             except TimeoutException:
                 print("Button was clicked but did NOT disappear ❌ (possible failure)")
