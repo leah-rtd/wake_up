@@ -8,10 +8,8 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.common.exceptions import TimeoutException
 import time
 
-# Streamlit app URL from environment variable (or default)
-STREAMLIT_URL = "https://leah-rothschild.streamlit.app/"
 
-def main():
+def main(url):
     options = Options()
     options.add_argument("headless=new")
     options.add_argument("no-sandbox")
@@ -22,8 +20,8 @@ def main():
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
     try:
-        driver.get(STREAMLIT_URL)
-        print(f"Opened {STREAMLIT_URL}")
+        driver.get(url)
+        print(f"Opened {url}")
 
         wait = WebDriverWait(driver, 15)
         try:
@@ -56,4 +54,5 @@ def main():
         print("Script finished.")
 
 if __name__ == "__main__":
-    main()
+    for url in ["https://leah-rothschild.streamlit.app/", "https://need-a-wagon.streamlit.app/"]:
+        main(url)
